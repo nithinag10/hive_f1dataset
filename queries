@@ -1,0 +1,8 @@
+1) most wins
+select driver.forename,count(results.position) as wins from driver  join results on  results.driverId=driver.driverId where results.position=1 group by driver.forename order by wins desc;
+
+2)most 2nd and 3rd position
+select driver.forename,count(results.position) as wins from driver  join results on  results.driverId=driver.driverId where results.position in (2,3)  group by driver.forename order by wins desc;
+
+4) highest lap record in australian grand prix
+select driver.forename from driver where driver.driverId in  (select lap_times.driverid from lap_times where lap_times.milliseconds in (select min(lap_times.milliseconds) from lap_times where lap_times.raceId in (select races.raceId from races where races.name like  "%Australian Grand Prix%")) limit 1);
